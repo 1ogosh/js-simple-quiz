@@ -60,21 +60,44 @@ function showQuestion() {
 	headerContainer.innerHTML = title;//Запись сгенерированной разметки внутрь контейнера
 
 	//Варианты ответов
+				let answerNumber = 1;
 				for (answerText of questions[questionIndex]['answers']) {// Перебор лишних вопросов
+					console.log(answerNumber, answerText);
 					const questionTemplate =
 					`<li>
 						<label>
-							<input type="radio" class="answer" name="answer" />
+							<input value = "%number%" type="radio" class="answer" name="answer" />
 							<span>%answer%</span>
 					</label>
 					</li>`;
-				const answerHTML = questionTemplate.replace('%answer%', answerText);
+
+				const answerHTML = questionTemplate
+																		.replace('%answer%', answerText)	
+																		.replace('%number%',answerNumber) 
+
 				listContainer.innerHTML += answerHTML; //= listContainer.innerHTML + answerHTML
+				answerNumber++;
 	}
 
 
 }	
 
 function checkAnswer(){
-	console.log('started!')
+	console.log('checkAnswer started!');
+
+	//Находим выбранную радио кнопку
+	const checkedRadio = listContainer.querySelector('input[type="radio"]:checked');
+	console.log(checkedRadio);
+
+	if (!checkedRadio) {
+		submitBtn.blur();
+		return
+	}//Если ответ не выбран ничего не делаем выходим из функции
+	//то же самое
+	// if (checkedRadio) {
+	// 	console.log('OK');
+	// } else {
+	// 	submitBtn.blur();
+	// 	return;
+	// }
 }
