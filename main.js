@@ -123,4 +123,42 @@ function checkAnswer(){
 
 function showResults() {
 	console.log('showResults started');
+	console.log(score);
+
+	const resultsTemplate = `
+			<h2 class="title">%title%</h2>
+			<h3 class="summary">%message%</h3>
+			<p class="result">%result%</p>
+			`;
+
+			let title, message;
+			//Варианты заголовков и текста
+			if (score === questions.length) {
+				title = 'Поздравляем';
+				message = 'Вы ответили верно на все вопросы';
+			} else if ((score * 100) / questions.length >= 50) {
+				title = 'Ниплохой результат';
+				message = 'Вы дали больше половины правильных ответов';
+			}else {
+				title = 'Стоит постараться';
+				message = 'Пока у Вас меньше половины верных ответов';
+			}
+
+			//Результат
+
+			let result = `${score} из ${questions.length}`;
+
+			//Финальный ответ
+
+			const finalMessage = resultsTemplate
+													.replace('%title%', title)
+													.replace('%message%', message)
+													.replace('%result%', result)
+
+			headerContainer.innerHTML = finalMessage;
+
+			//Меняем кнопку на играть заново
+			submitBtn.blur();
+			submitBtn.innerText = 'Начать заново';
+			submitBtn.onclick = () => { history.go() };//пустое history.go == обновлению страницы
 }
