@@ -62,7 +62,7 @@ function showQuestion() {
 	//Варианты ответов
 				let answerNumber = 1;
 				for (answerText of questions[questionIndex]['answers']) {// Перебор лишних вопросов
-					console.log(answerNumber, answerText);
+		
 					const questionTemplate =
 					`<li>
 						<label>
@@ -87,7 +87,7 @@ function checkAnswer(){
 
 	//Находим выбранную радио кнопку
 	const checkedRadio = listContainer.querySelector('input[type="radio"]:checked');
-	console.log(checkedRadio);
+	
 
 	if (!checkedRadio) {
 		submitBtn.blur();
@@ -100,4 +100,27 @@ function checkAnswer(){
 	// 	submitBtn.blur();
 	// 	return;
 	// }
+	const userAnswer = parseInt(checkedRadio.value);
+
+	//Если ответ верен увеличиваем счет
+	if (userAnswer === questions[questionIndex]['correct']) {
+		score++;
+	}
+	console.log('score =', score);
+
+	if (questionIndex !== questions.length - 1) {
+		console.log('Это не последний вопрос');
+		questionIndex++;
+		clearPage();
+		showQuestion();
+		return;
+	}else {
+		console.log('Это последний вопрос');
+		clearPage();
+		showResults();
+	}
+}
+
+function showResults() {
+	console.log('showResults started');
 }
